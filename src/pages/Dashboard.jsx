@@ -18,52 +18,51 @@ import "../styles/Dashboard.css"
 
         return (
          <>
-         <h2>Welcome User</h2>
-         <div className="cards">
-            
-            <CustomCardWithChildren 
-                  title="Online Mode" 
-                  body="Is this application connected to the internet?" 
+         <div className="container">
+            <h2>Welcome User</h2>
+            <div className="cards">
+               
+               <CustomCardWithChildren 
+                     title="Online Mode" 
+                     body="Is this application connected to the internet?" 
+                  >
+                     <Switch onChange={() => setIsOnline(!isOnline)}/>
+                  </CustomCardWithChildren>
+
+
+
+
+               <CustomCardWithChildren 
+                  title="Master Volume" 
+                  body="Overrides all other sounds settings in this application" 
                >
-                  <Switch onChange={() => setIsOnline(!isOnline)}/>
+                  <Slider style={{padding:"15px"}} onChange={(event) => setIsLoud(event.target.value)}/>
                </CustomCardWithChildren>
 
 
 
 
-            <CustomCardWithChildren 
-               title="Master Volume" 
-               body="Overrides all other sounds settings in this application" 
-            >
-               <Slider onChange={(event) => setIsLoud(event.target.value)}/>
-            </CustomCardWithChildren>
+               <CustomCardWithChildren 
+                  title="Sound Quality" 
+                  body="Manually control the music quality in event of poor connection" 
+               >
+                  <Select value={selection} onChange={handleSelection}>
+                     <MenuItem value={1}>Low</MenuItem>
+                     <MenuItem value={2}>Normal</MenuItem>
+                     <MenuItem value={3}>High</MenuItem>
+                  </Select>
+               </CustomCardWithChildren>
+            
+            </div>
+               <h3>System Noficiations:</h3>
+               {isOnline && (
+                  <p>Your application is offline. You won't be able to share or stream music to other devices.</p>
+               )}
 
+               {isLoud > 80 && <p>Listening to music at a high volume could cause long-term hearing loss.</p>}
 
-
-
-            <CustomCardWithChildren 
-               title="Sound Quality" 
-               body="Manually control the music quality in event of poor connection" 
-            >
-               <Select value={selection} onChange={handleSelection}>
-                  <MenuItem value={1}>Low</MenuItem>
-                  <MenuItem value={2}>Normal</MenuItem>
-                  <MenuItem value={3}>High</MenuItem>
-               </Select>
-            </CustomCardWithChildren>
-         
-         </div>
-         <h3>System Noficiations:</h3>
-         {isOnline && (
-            <p>Offline</p>
-        )}
-
-        {isLoud > 80 && <p>Listening to music at a high volume could cause long-term hearing loss.</p>
-
-        }
-
-        {selection === 1 && <p>Music quality is degraded. Increase quality if your connection allows it.</p>}
-         
+               {selection === 1 && <p>Music quality is degraded. Increase quality if your connection allows it.</p>}
+            </div>
          </>
       )
     }
